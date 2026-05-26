@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+:root {
+  color-scheme: dark;
+}
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-background: #08090b;
+  --color-foreground: #f5f7fb;
+  --color-muted: #8b95a7;
+  --color-panel: #111318;
+  --color-panel-soft: #171a21;
+  --color-line: #272b35;
+  --color-signal: #7dd3fc;
+  --color-mint: #8ee6c9;
+  --color-rose: #f0a3b2;
+  --color-amber: #f4c76b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(125, 211, 252, 0.12), transparent 28rem),
+    radial-gradient(circle at 82% 8%, rgba(142, 230, 201, 0.09), transparent 26rem),
+    linear-gradient(180deg, #090a0d 0%, #0d0f14 58%, #08090b 100%);
+  color: var(--color-foreground);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.glass {
+  background: rgba(17, 19, 24, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.react-flow__node {
+  border-radius: 8px;
+  border: 1px solid rgba(125, 211, 252, 0.3);
+  background: rgba(17, 19, 24, 0.92);
+  color: #f5f7fb;
+  font-size: 12px;
+  max-width: 180px;
+}
+
+.react-flow__handle {
+  background: #7dd3fc;
+}
+
+.react-flow__edge-path {
+  stroke: rgba(125, 211, 252, 0.58);
+}
