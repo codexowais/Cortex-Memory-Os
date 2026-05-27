@@ -12,8 +12,20 @@ const extractedMemorySchema = z.object({
       importance: z.number().min(1).max(10),
       relationships: z.array(
         z.object({
-          type: z.enum(["supports", "relates_to", "contradicts", "follows_up", "recurs_with"]),
-          hint: z.string()
+          type: z.enum([
+            "related_to",
+            "caused_by",
+            "part_of",
+            "emotionally_linked",
+            "supports",
+            "relates_to",
+            "contradicts",
+            "follows_up",
+            "recurs_with"
+          ]),
+          hint: z.string(),
+          targetId: z.string().optional(),
+          strength: z.number().optional()
         })
       ),
       signals: z.array(z.string())
@@ -58,7 +70,7 @@ async function extractWithOpenAI(openai: OpenAI, input: string) {
       {
         role: "system",
         content:
-          "Extract durable personal memories from the user input. Only store facts, preferences, goals, routines, projects, tasks, emotional states, and productivity patterns that will matter later. Return JSON with a memories array."
+          "Extract durable personal memories from the user input. Only store facts, preferences, goals, routines, projects, tasks, emotional states, and productivity patterns that will matter later. Add cognitive signals such as burnout-risk, time-pressure, late-night-focus, recurring-pattern, unfinished-loop, architecture-focus, debugging-overload, demo-pressure, or focus-momentum when appropriate. Use relationship types related_to, caused_by, part_of, or emotionally_linked when the input itself implies a link. Return JSON with a memories array."
       },
       { role: "user", content: input }
     ]
@@ -87,7 +99,14 @@ function extractHeuristically(input: string): ExtractedMemory[] {
                 ? "productivity_pattern"
                 : "project";
 
-  const importance = lower.includes("must") || lower.includes("important") || lower.includes("deadline") ? 9 : 7;
+  const importance =
+    lower.includes("must") ||
+    lower.includes("important") ||
+    lower.includes("deadline") ||
+    lower.includes("demo") ||
+    lower.includes("stuck")
+      ? 9
+      : 7;
   const content = input.trim();
 
   if (content.length < 8) return [];
@@ -98,7 +117,7 @@ function extractHeuristically(input: string): ExtractedMemory[] {
       summary: content.length > 120 ? `${content.slice(0, 117)}...` : content,
       category,
       importance,
-      relationships: [{ type: "relates_to" as const, hint: "Captured from the current conversation." }],
+      relationships: [{ type: "related_to" as const, hint: "Captured from the current conversation." }],
       signals: inferSignals(lower)
     }
   ];
@@ -107,8 +126,14 @@ function extractHeuristically(input: string): ExtractedMemory[] {
 function inferSignals(lower: string) {
   return [
     lower.includes("midnight") || lower.includes("night") ? "late-night-focus" : "",
-    lower.includes("tired") || lower.includes("burnout") ? "burnout-risk" : "",
-    lower.includes("deadline") || lower.includes("tomorrow") ? "time-pressure" : "",
-    lower.includes("usually") || lower.includes("always") ? "recurring-pattern" : ""
+    lower.includes("tired") || lower.includes("burnout") || lower.includes("exhausted") ? "burnout-risk" : "",
+    lower.includes("deadline") || lower.includes("tomorrow") || lower.includes("demo") ? "time-pressure" : "",
+    lower.includes("usually") || lower.includes("always") ? "recurring-pattern" : "",
+    lower.includes("need to") || lower.includes("todo") || lower.includes("finish") ? "unfinished-loop" : "",
+    lower.includes("architecture") || lower.includes("retrieval") || lower.includes("memory") ? "architecture-focus" : "",
+    lower.includes("debug") || lower.includes("bug") || lower.includes("broken") ? "debugging-overload" : "",
+    lower.includes("stress") || lower.includes("scattered") || lower.includes("overwhelmed") ? "stress-signal" : "",
+    lower.includes("productive") || lower.includes("momentum") || lower.includes("focus") ? "focus-momentum" : "",
+    lower.includes("hackathon") || lower.includes("demo") ? "demo-pressure" : ""
   ].filter(Boolean);
 }

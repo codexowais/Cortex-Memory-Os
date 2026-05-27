@@ -1,7 +1,8 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { createEmbedding, cosineSimilarity } from "./embeddings";
-import { Memory } from "./types";
+import { createEmbedding } from "./embeddings";
+import { rankMemories } from "./ranking";
+import { Memory, RankedMemory } from "./types";
 import { fromMemoryRow, getSupabaseAdmin, toMemoryRow } from "@/lib/supabase/server";
 
 const LOCAL_STORE = path.join(process.cwd(), ".cortex-memory.json");
@@ -45,6 +46,11 @@ export async function getAllMemories(userId = "demo-user"): Promise<Memory[]> {
 }
 
 export async function retrieveMemories(query: string, userId = "demo-user", limit = 7) {
+  const ranked = await retrieveRankedMemories(query, userId, limit);
+  return ranked.map((item) => item.memory);
+}
+
+export async function retrieveRankedMemories(query: string, userId = "demo-user", limit = 7): Promise<RankedMemory[]> {
   const queryEmbedding = await createEmbedding(query);
   const supabase = getSupabaseAdmin();
 
@@ -52,21 +58,17 @@ export async function retrieveMemories(query: string, userId = "demo-user", limi
     const { data, error } = await supabase.rpc("match_memories", {
       query_embedding: queryEmbedding,
       match_user_id: userId,
-      match_count: limit
+      match_count: limit * 4
     });
 
-    if (!error && data) return data.map(fromMemoryRow);
+    if (!error && data) {
+      const candidates = data.map(fromMemoryRow);
+      return rankMemories(query, queryEmbedding, candidates, limit);
+    }
   }
 
   const memories = await getAllMemories(userId);
-  return memories
-    .map((memory) => ({
-      memory,
-      score: cosineSimilarity(queryEmbedding, memory.embedding) + memory.importance / 100
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map((item) => item.memory);
+  return rankMemories(query, queryEmbedding, memories, limit);
 }
 
 function seedMemories(userId: string): Memory[] {
@@ -81,8 +83,8 @@ function seedMemories(userId: string): Memory[] {
       importance: 9,
       timestamp: now,
       embedding: [],
-      relationships: [{ type: "recurs_with", hint: "Architecture work is often paired with late-night focus." }],
-      metadata: { source: "system", signals: ["late-night-focus", "recurring-pattern"] }
+      relationships: [{ type: "related_to", hint: "Architecture work is often paired with late-night focus." }],
+      metadata: { source: "system", signals: ["late-night-focus", "recurring-pattern", "focus-momentum"] }
     },
     {
       id: "seed-hackathon-goal",
@@ -93,8 +95,8 @@ function seedMemories(userId: string): Memory[] {
       importance: 10,
       timestamp: now,
       embedding: [],
-      relationships: [{ type: "supports", hint: "Prioritize features that create 'it remembered me' moments." }],
-      metadata: { source: "system", signals: ["demo-impact"] }
+      relationships: [{ type: "part_of", hint: "Prioritize features that create 'it remembered me' moments." }],
+      metadata: { source: "system", signals: ["demo-impact", "demo-pressure", "architecture-focus"] }
     }
   ];
 }
