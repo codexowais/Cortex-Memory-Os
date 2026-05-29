@@ -1,4 +1,5 @@
 import { normalizeRelationshipType } from "./relationships";
+import { findOpenLoops } from "./open-loops";
 import { scoreEmotionalWeight, scoreRecency, scoreRecurrence } from "./ranking";
 import { DailyCognitiveSummary, Memory, MemoryCategory, MemoryGraph, ProactiveInsight } from "./types";
 
@@ -34,12 +35,7 @@ export function detectPatterns(memories: Memory[]): ProactiveInsight[] {
     });
   }
 
-  const loops = memories.filter(
-    (memory) =>
-      memory.category === "task" ||
-      memory.metadata.signals.includes("unfinished-loop") ||
-      /need to|todo|finish|remind|before the demo/i.test(memory.content)
-  );
+  const loops = findOpenLoops(memories, { limit: 5 });
   if (loops.length) {
     insights.push({
       id: "unfinished-loops",
@@ -48,10 +44,10 @@ export function detectPatterns(memories: Memory[]): ProactiveInsight[] {
         loops.length === 1 ? "is one remembered task" : `are ${loops.length} remembered tasks`
       } with enough weight to resurface before planning continues.`,
       confidence: confidenceFrom(loops.length, 0.74),
-      priority: 0.84,
+      priority: Math.max(0.84, loops[0].score),
       category: "task",
-      memoryIds: loops.map((memory) => memory.id),
-      suggestedAction: `Close or explicitly defer: "${loops[0].summary}"`
+      memoryIds: loops.map((loop) => loop.memory.id),
+      suggestedAction: `Close or explicitly defer: "${loops[0].memory.summary}"`
     });
   }
 
@@ -222,7 +218,7 @@ function inferEmotionalTrend(memories: Memory[]) {
 }
 
 function inferSuggestedAction(memories: Memory[], emotionalTrend: string) {
-  const unfinished = memories.find((memory) => memory.category === "task" || memory.metadata.signals.includes("unfinished-loop"));
+  const unfinished = findOpenLoops(memories, { limit: 1 })[0]?.memory;
   if (emotionalTrend.includes("strained") || emotionalTrend.includes("overloaded")) {
     return "reduce the next work block to one concrete decision or fix";
   }

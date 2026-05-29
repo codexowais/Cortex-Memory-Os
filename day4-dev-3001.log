@@ -1,0 +1,52 @@
+
+> cortex-memory-os@0.1.0 dev
+> next dev --turbopack --hostname 127.0.0.1 --port 3001
+
+   ▲ Next.js 15.5.18 (Turbopack)
+   - Local:        http://127.0.0.1:3001
+   - Network:      http://127.0.0.1:3001
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+Creating turbopack project {
+  dir: 'C:\\Users\\owais\\Documents\\Cortex-Memory-OS',
+  testMode: true
+}
+ ✓ Ready in 2.1s
+ ○ Compiling /api/insights ...
+ ✓ Compiled /api/insights in 2.4s
+ GET /api/insights 200 in 3206ms
+ GET /api/insights 200 in 532ms
+ GET /api/insights 200 in 554ms
+ GET /api/insights 200 in 494ms
+ ✓ Compiled /api/chat in 291ms
+ POST /api/chat 200 in 687ms
+ POST /api/chat 200 in 347ms
+ POST /api/chat 200 in 605ms
+ POST /api/chat 200 in 542ms
+ POST /api/chat 200 in 485ms
+ POST /api/chat 200 in 362ms
+ POST /api/chat 200 in 864ms
+ ○ Compiling / ...
+ GET /api/insights 200 in 642ms
+ ✓ Compiled / in 3.4s
+ GET / 200 in 3817ms
+ POST /api/chat 200 in 593ms
+ GET / 200 in 270ms
+ GET / 200 in 583ms
+ GET /api/insights 200 in 1194ms
+ POST /api/chat 200 in 1505ms
+ GET /api/insights 200 in 855ms
+ POST /api/chat 200 in 889ms
+ GET /api/insights 200 in 1018ms
+ POST /api/chat 200 in 746ms
+ GET /api/insights 200 in 954ms
+ GET / 200 in 547ms
+ GET /api/insights 200 in 831ms
+ GET / 200 in 695ms
+ GET /api/insights 200 in 867ms
+ ✓ Compiled in 183ms
+ ✓ Compiled in 218ms
+ GET / 200 in 1208ms
+ GET /api/insights 200 in 743ms

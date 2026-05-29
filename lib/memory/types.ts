@@ -26,6 +26,14 @@ export type MemoryRelationship = {
   strength?: number;
 };
 
+export type OpenLoopState = {
+  status: "active" | "resolved";
+  resurfacedCount: number;
+  lastMentionedAt: string;
+  lastResurfacedAt?: string;
+  openLoopScore: number;
+};
+
 export type Memory = {
   id: string;
   userId: string;
@@ -40,6 +48,7 @@ export type Memory = {
     source: "conversation" | "system";
     signals: string[];
     lastReferencedAt?: string;
+    openLoop?: OpenLoopState;
   };
 };
 
@@ -56,10 +65,48 @@ export type RankedMemory = {
   };
 };
 
+export type OpenLoopCandidate = {
+  memory: Memory;
+  score: number;
+  reasons: string[];
+  urgency: "low" | "medium" | "high";
+};
+
+export type ResurfacedMemory = {
+  memory: Memory;
+  score: number;
+  reason: string;
+  trigger: "next_step" | "stuck" | "emotional" | "semantic";
+};
+
 export type ConversationTurn = {
   role: "user" | "assistant";
   content: string;
   timestamp: string;
+};
+
+export type ReflectionReport = {
+  headline: string;
+  learned: string[];
+  habits: string[];
+  productivityPatterns: string[];
+  emotionalTrends: string[];
+  recurringGoals: string[];
+  behavioralShifts: string[];
+};
+
+export type MemoryTimelineDay = {
+  date: string;
+  label: string;
+  theme: string;
+  emotionalTrend: string;
+  milestones: string[];
+  memories: Array<{
+    id: string;
+    summary: string;
+    category: MemoryCategory;
+    importance: number;
+  }>;
 };
 
 export type ProactiveInsight = {

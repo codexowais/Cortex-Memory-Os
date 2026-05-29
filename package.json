@@ -11,8 +11,10 @@
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@supabase/supabase-js": "^2.49.8",
+    "@types/dagre": "^0.7.54",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dagre": "^0.8.5",
     "lucide-react": "^0.511.0",
     "next": "^15.3.3",
     "openai": "^4.103.0",

@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { z } from "zod";
 import { createEmbedding } from "./embeddings";
+import { initializeOpenLoopState } from "./open-loops";
 import { Memory, MemoryCategory, memoryCategories } from "./types";
 
 const extractedMemorySchema = z.object({
@@ -43,21 +44,26 @@ export async function extractMemories(input: string, userId = "demo-user"): Prom
   const extracted = openai ? await extractWithOpenAI(openai, input) : extractHeuristically(input);
 
   return Promise.all(
-    extracted.map(async (item) => ({
-      id: crypto.randomUUID(),
-      userId,
-      content: item.content,
-      summary: item.summary,
-      category: item.category,
-      importance: item.importance,
-      timestamp: new Date().toISOString(),
-      embedding: await createEmbedding(`${item.category}: ${item.content} ${item.summary}`),
-      relationships: item.relationships,
-      metadata: {
-        source: "conversation",
-        signals: item.signals
-      }
-    }))
+    extracted.map(async (item) => {
+      const timestamp = new Date().toISOString();
+      const memory: Memory = {
+        id: crypto.randomUUID(),
+        userId,
+        content: item.content,
+        summary: item.summary,
+        category: item.category,
+        importance: item.importance,
+        timestamp,
+        embedding: await createEmbedding(`${item.category}: ${item.content} ${item.summary}`),
+        relationships: item.relationships,
+        metadata: {
+          source: "conversation",
+          signals: item.signals
+        }
+      };
+
+      return initializeOpenLoopState(memory, timestamp);
+    })
   );
 }
 
@@ -70,7 +76,7 @@ async function extractWithOpenAI(openai: OpenAI, input: string) {
       {
         role: "system",
         content:
-          "Extract durable personal memories from the user input. Only store facts, preferences, goals, routines, projects, tasks, emotional states, and productivity patterns that will matter later. Add cognitive signals such as burnout-risk, time-pressure, late-night-focus, recurring-pattern, unfinished-loop, architecture-focus, debugging-overload, demo-pressure, or focus-momentum when appropriate. Use relationship types related_to, caused_by, part_of, or emotionally_linked when the input itself implies a link. Return JSON with a memories array."
+          "Extract durable personal memories from the user input. Only store facts, preferences, goals, routines, projects, tasks, emotional states, and productivity patterns that will matter later. Add cognitive signals such as burnout-risk, time-pressure, late-night-focus, recurring-pattern, unfinished-loop, architecture-focus, debugging-overload, demo-pressure, stuck-signal, or focus-momentum when appropriate. Mark unfinished tasks, goals, decisions, postponed work, and incomplete projects with unfinished-loop. Use relationship types related_to, caused_by, part_of, or emotionally_linked when the input itself implies a link. Return JSON with a memories array."
       },
       { role: "user", content: input }
     ]
@@ -91,7 +97,7 @@ function extractHeuristically(input: string): ExtractedMemory[] {
         ? "preference"
         : lower.includes("usually") || lower.includes("every") || lower.includes("routine")
           ? "routine"
-          : lower.includes("todo") || lower.includes("need to") || lower.includes("remind")
+          : lower.includes("todo") || lower.includes("need to") || lower.includes("remind") || lower.includes("finish")
             ? "task"
             : lower.includes("tired") || lower.includes("anxious") || lower.includes("burn")
               ? "emotional_state"
@@ -110,6 +116,7 @@ function extractHeuristically(input: string): ExtractedMemory[] {
   const content = input.trim();
 
   if (content.length < 8) return [];
+  if (isNonDurableQuery(lower)) return [];
 
   return [
     {
@@ -123,6 +130,18 @@ function extractHeuristically(input: string): ExtractedMemory[] {
   ];
 }
 
+function isNonDurableQuery(lower: string) {
+  return (
+    /^what should i work on/.test(lower) ||
+    /^what should i do/.test(lower) ||
+    /^what have you learned/.test(lower) ||
+    /^what do you know about me/.test(lower) ||
+    /^what now/.test(lower) ||
+    /^next step\??$/.test(lower) ||
+    /^hi\b|^hello\b/.test(lower)
+  );
+}
+
 function inferSignals(lower: string) {
   return [
     lower.includes("midnight") || lower.includes("night") ? "late-night-focus" : "",
@@ -133,6 +152,7 @@ function inferSignals(lower: string) {
     lower.includes("architecture") || lower.includes("retrieval") || lower.includes("memory") ? "architecture-focus" : "",
     lower.includes("debug") || lower.includes("bug") || lower.includes("broken") ? "debugging-overload" : "",
     lower.includes("stress") || lower.includes("scattered") || lower.includes("overwhelmed") ? "stress-signal" : "",
+    lower.includes("stuck") || lower.includes("blocked") || lower.includes("not sure") ? "stuck-signal" : "",
     lower.includes("productive") || lower.includes("momentum") || lower.includes("focus") ? "focus-momentum" : "",
     lower.includes("hackathon") || lower.includes("demo") ? "demo-pressure" : ""
   ].filter(Boolean);

@@ -1,12 +1,24 @@
 import OpenAI from "openai";
-import { Memory, RankedMemory } from "./types";
+import { findOpenLoops, shouldAnswerWithReflection } from "./open-loops";
+import { generateReflection } from "./reflection";
+import { Memory, RankedMemory, ResurfacedMemory } from "./types";
 
 function getOpenAI() {
   if (!process.env.OPENAI_API_KEY) return null;
   return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 }
 
-export async function generateContextualResponse(input: string, savedMemories: Memory[], rankedMemories: RankedMemory[]) {
+export async function generateContextualResponse(
+  input: string,
+  savedMemories: Memory[],
+  rankedMemories: RankedMemory[],
+  allMemories: Memory[],
+  resurfaced: ResurfacedMemory[]
+) {
+  if (shouldAnswerWithReflection(input)) {
+    return formatReflection(generateReflection(allMemories));
+  }
+
   const openai = getOpenAI();
   const context = rankedMemories
     .map(
@@ -19,6 +31,13 @@ export async function generateContextualResponse(input: string, savedMemories: M
     )
     .join("\n");
   const justSaved = savedMemories.map((memory) => `- ${memory.summary}`).join("\n");
+  const openLoops = findOpenLoops(allMemories, { currentInput: input, rankedMemories, limit: 3 });
+  const resurfacingContext = resurfaced
+    .map((item) => `- [${item.trigger}, ${item.score.toFixed(2)}] ${item.memory.summary}. Reason: ${item.reason}`)
+    .join("\n");
+  const openLoopContext = openLoops
+    .map((item) => `- [${item.urgency}, ${item.score.toFixed(2)}] ${item.memory.summary}; reasons: ${item.reasons.join(", ")}`)
+    .join("\n");
 
   if (openai) {
     const completion = await openai.chat.completions.create({
@@ -28,30 +47,44 @@ export async function generateContextualResponse(input: string, savedMemories: M
         {
           role: "system",
           content:
-            "You are Cortex, a persistent cognitive layer, not a chatbot. Sound observant, calm, contextual, and reflective. Reference memory naturally when it matters. Prefer concrete pattern language such as 'I noticed...' or 'This connects with...' Avoid generic assistant openers, robotic bullet dumps, and therapy-speak. Offer one small proactive next step only when it is genuinely useful."
+            "You are Cortex, a persistent cognitive layer, not a chatbot. Sound observant, calm, contextual, and reflective. Reference memory naturally when it matters. Prefer concrete pattern language such as 'I noticed...' or 'This connects with...' Open loops are unfinished intentions; resurface them only when useful, especially for next-step, stuck, or emotional prompts. Avoid generic assistant openers, robotic bullet dumps, and therapy-speak. Offer one small proactive next step only when it is genuinely useful."
         },
         {
           role: "user",
           content: `Newly captured memory:\n${justSaved || "No new durable memory captured."}\n\nRanked long-term memory:\n${
             context || "No prior memory yet."
-          }\n\nCurrent user message:\n${input}`
+          }\n\nContextual resurfacing candidates:\n${
+            resurfacingContext || "No memory should be proactively resurfaced."
+          }\n\nActive open loops:\n${openLoopContext || "No active open loops detected."}\n\nCurrent user message:\n${input}`
         }
       ]
     });
 
-    return completion.choices[0].message.content ?? fallbackResponse(input, savedMemories, rankedMemories);
+    return completion.choices[0].message.content ?? fallbackResponse(input, savedMemories, rankedMemories, allMemories, resurfaced);
   }
 
-  return fallbackResponse(input, savedMemories, rankedMemories);
+  return fallbackResponse(input, savedMemories, rankedMemories, allMemories, resurfaced);
 }
 
-function fallbackResponse(input: string, savedMemories: Memory[], rankedMemories: RankedMemory[]) {
+function fallbackResponse(
+  input: string,
+  savedMemories: Memory[],
+  rankedMemories: RankedMemory[],
+  allMemories: Memory[],
+  resurfaced: ResurfacedMemory[]
+) {
   const strongest = rankedMemories[0]?.memory ?? savedMemories[0];
   const saved = savedMemories[0];
   const lower = input.toLowerCase();
+  const openLoop = resurfaced[0] ?? findOpenLoops(allMemories, { currentInput: input, rankedMemories, limit: 1 })[0];
 
   if (!strongest) {
     return "I captured the shape of that. As we keep going, I'll start connecting your goals, routines, emotional patterns, and unfinished loops into something more continuous.";
+  }
+
+  if (openLoop && (/what should|next step|work on|stuck|blocked|overwhelmed|stress|stressed/i.test(input) || openLoop.score >= 0.72)) {
+    const reason = "reason" in openLoop ? openLoop.reason : "It is important, unfinished, and connected to the current context.";
+    return `You mentioned "${openLoop.memory.summary}" and it still looks like an active open loop. ${reason} The highest-leverage next move may be to make one concrete pass at that before adding new scope.`;
   }
 
   if (strongest.metadata.signals.includes("burnout-risk") || strongest.metadata.signals.includes("stress-signal")) {
@@ -71,4 +104,16 @@ function fallbackResponse(input: string, savedMemories: Memory[], rankedMemories
   }
 
   return `Stored. This now sits near: "${strongest.summary}" I'll watch whether it becomes a recurring pattern, an emotional signal, or an open loop worth resurfacing.`;
+}
+
+function formatReflection(report: ReturnType<typeof generateReflection>) {
+  return [
+    report.headline,
+    "",
+    ...report.learned.map((item) => `- ${item}`),
+    "",
+    report.behavioralShifts[0] ? `Recent shift: ${report.behavioralShifts[0]}` : ""
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
