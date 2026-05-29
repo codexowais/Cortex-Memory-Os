@@ -1,0 +1,284 @@
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[430px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/page.tsx:1:1
+Module not found: Can't resolve '@/components/cortex-dashboard'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mCortexDashboard[39m } [36mfrom[39m [32m"@/components/cortex-dashboard"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m
+ [90m 3 |[39m [36mexport[39m [36mconst[39m dynamic [33m=[39m [32m"force-dynamic"[39m[33m;[39m
+ [90m 4 |[39m [36mexport[39m [36mconst[39m revalidate [33m=[39m [35m0[39m[33m;[39m[0m
+
+Import map: aliased to relative './components/cortex-dashboard' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./app/page.tsx:1:1
+Module not found: Can't resolve '@/components/cortex-dashboard'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m { [33mCortexDashboard[39m } [36mfrom[39m [32m"@/components/cortex-dashboard"[39m[33m;[39m
+ [90m   |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m
+ [90m 3 |[39m [36mexport[39m [36mconst[39m dynamic [33m=[39m [32m"force-dynamic"[39m[33m;[39m
+ [90m 4 |[39m [36mexport[39m [36mconst[39m revalidate [33m=[39m [35m0[39m[33m;[39m[0m
+
+Import map: aliased to relative './components/cortex-dashboard' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[680px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[680px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[680px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[680px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx
+Module not found: Can't resolve '@/components/memory-graph'
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ⨯ ./components/cortex-dashboard.tsx:28:35
+Module not found: Can't resolve '@/components/memory-graph'
+[0m [90m 26 |[39m } [36mfrom[39m [32m"@/lib/memory/types"[39m[33m;[39m
+ [90m 27 |[39m
+[31m[1m>[22m[39m[90m 28 |[39m [36mconst[39m [33mMemoryGraph[39m [33m=[39m dynamic(() [33m=>[39m [36mimport[39m([32m"@/components/memory-graph"[39m)[33m.[39mthen((mod) [33m=>[39m mod[33m.[39m[33mMemoryGraph[39m)[33m,[39m {
+ [90m    |[39m                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 29 |[39m   ssr[33m:[39m [36mfalse[39m[33m,[39m
+ [90m 30 |[39m   loading[33m:[39m () [33m=>[39m (
+ [90m 31 |[39m     [33m<[39m[33mdiv[39m className[33m=[39m[32m"grid h-[680px] place-items-center rounded-lg border border-white/10 bg-black/20 text-sm text-muted"[39m[33m>[39m[0m
+
+Import map: aliased to relative './components/memory-graph' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/cortex-dashboard.tsx
+    ./app/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+

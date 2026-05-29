@@ -50,3 +50,18 @@ Creating turbopack project {
  ✓ Compiled in 218ms
  GET / 200 in 1208ms
  GET /api/insights 200 in 743ms
+ ✓ Compiled in 489ms
+ ✓ Compiled in 187ms
+ ✓ Compiled / in 144ms
+ GET / 200 in 554ms
+ GET /api/insights 200 in 603ms
+ GET / 200 in 602ms
+ GET /api/insights 200 in 630ms
+ ✓ Compiled in 464ms
+ ✓ Compiled in 1993ms
+ ○ Compiling / ...
+ ✓ Compiled / in 624ms
+ GET / 200 in 2063ms
+ GET / 200 in 1997ms
+ GET /api/insights 200 in 1639ms
+ ✓ Compiled in 857ms

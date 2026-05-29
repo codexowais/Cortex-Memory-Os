@@ -447,6 +447,8 @@ What was added:
 - Auto Layout / Manual Layout toggle.
 - Manual Layout preserves user-adjusted node positions by memory id.
 - Dragging a node while Auto Layout is active switches into Manual Layout so the user's arrangement is not overwritten.
+- Reference-style graph presentation with filter chips, category legend, icon controls, dotted canvas, minimap, zoom controls, selected-node styling, and tip bar.
+- Functional filters for All, Architecture, Open Loops, Productivity, Energy, Patterns, and Preferences.
 - Dashboard tabs: Overview, Reflection, Timeline, and Graph.
 - Memory Graph moved into the dedicated Graph tab.
 
@@ -464,6 +466,8 @@ How it works:
 - Auto Layout recomputes Dagre positions when graph data changes.
 - Manual Layout applies saved positions from local React state over Dagre fallback positions.
 - Existing edge labels, relationship colors, arrow markers, smoothstep edges, and interaction controls are preserved.
+- Filters derive visible nodes on the client and keep only edges whose source and target are both visible.
+- The expand control makes the graph section a fixed overlay for focused demo viewing.
 
 Cognition impact:
 
@@ -473,6 +477,7 @@ Cognition impact:
 Demo impact:
 
 - The Graph tab gives a clean, high-focus moment for showing how memories connect.
+- The graph now visually matches the intended demo reference: dark graph canvas, labeled relationship pills, category legend, minimap, and compact glowing node cards.
 - The Overview tab stays operational and focused on chat, open loops, suggestions, summary, and memory pulse.
 
 ## Important Architecture Decisions
@@ -507,6 +512,7 @@ Completed:
 - Day 4 `/api/insights` smoke test returned `200`
 - Day 4 `/api/chat` smoke test for "What should I work on next?" resurfaced the unfinished pitch deck
 - Graph/dashboard TypeScript verification after Dagre tab refactor: `npx tsc --noEmit`
+- Graph visual polish verification: `npx tsc --noEmit`, app route `200`, `/api/insights` `200`
 
 The working dev server was started at:
 
@@ -551,6 +557,7 @@ Day 4 behavior:
 - The dashboard now shows open loops, reflection, and a cognitive timeline alongside insights, summary, and graph.
 - The dashboard is organized into Overview, Reflection, Timeline, and Graph tabs.
 - The Graph tab uses Dagre automatic layout and supports draggable manual node positioning.
+- The Graph tab includes filter chips, legend, minimap, expand mode, zoom controls, and a tip bar.
 - Open loops track how often they have been resurfaced so reminders can remain useful instead of repetitive.
 
 ## Next Useful Steps
